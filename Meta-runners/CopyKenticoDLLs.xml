@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta-runner name="Copy Kentico DLLs">
+  <description>Copies Kentico DLLs from Lib to bin</description>
+  <settings>
+    <parameters />
+    <build-runners>
+      <runner name="Copy Kentico DLLs" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[xcopy ".\Lib" ".\CMS\bin" /I /Y
+xcopy ".\Lib\Azure" ".\CMS\bin" /I /Y]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <requirements />
+  </settings>
+</meta-runner>

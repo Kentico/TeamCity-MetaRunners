@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta-runner name="Kentico Continuous Integration Restore">
+  <description>Runs Kentico CI restore</description>
+  <settings>
+    <parameters>
+      <param name="DeployRootDirectory" value="" />
+    </parameters>
+    <build-runners>
+      <runner name="Kentico Continuous Integration Restore" type="jetbrains_powershell">
+        <parameters>
+          <param name="jetbrains_powershell_bitness" value="x86" />
+          <param name="jetbrains_powershell_execution" value="PS1" />
+          <param name="jetbrains_powershell_scriptArguments" value="path &quot;%DeployRootDirectory%&quot;" />
+          <param name="jetbrains_powershell_script_code"><![CDATA[# Parameter that specifies the path of your Kentico web project folder (i.e. the CMS subfolder)
+param (
+    [Parameter(Mandatory=$true)]
+    [string]$Path
+)
+ 
+# Creates an 'App_Offline.htm' file to stop the website
+"<html><head></head><body>Continuous integration restore in progress...</body></html>" > "$Path\App_Offline.htm"
+ 
+# Runs the continuous integration restore utility
+& "$Path\bin\ContinuousIntegration.exe" -r
+ 
+# Removes the 'App_Offline.htm' file to bring the site back online
+Remove-Item "$Path\App_Offline.htm"]]></param>
+          <param name="jetbrains_powershell_script_mode" value="CODE" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <requirements />
+  </settings>
+</meta-runner>
+

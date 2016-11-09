@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta-runner name="Create Sensitive configs (Kentico)">
+  <description>Creates AppSettings.config and ConnectionStrings.config files in the CMS directory</description>
+  <settings>
+    <parameters>
+      <param name="CMSConnectionString" value="" />
+      <param name="CMSHashStringSalt" value="" />
+    </parameters>
+    <build-runners>
+      <runner name="Create AppSettings.config" type="MRPP_CreateTextFile">
+        <parameters>
+          <param name="content"><![CDATA[<appSettings>
+  <add key="CMSHashStringSalt" value="%CMSHashStringSalt%" />
+</appSettings>]]></param>
+          <param name="system.dest.file" value="%teamcity.build.workingDir%/CMS/AppSettings.config" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner name="Create ConnectionStrings.config" type="MRPP_CreateTextFile">
+        <parameters>
+          <param name="content"><![CDATA[<connectionStrings>
+  <add name="CMSConnectionString" connectionString="%CMSConnectionString%" />
+</connectionStrings>]]></param>
+          <param name="system.dest.file" value="%teamcity.build.workingDir%/CMS/ConnectionStrings.config" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <requirements />
+  </settings>
+</meta-runner>

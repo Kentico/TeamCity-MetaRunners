@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta-runner name="Deploy CMS directory (Kentico)">
+  <description>Copies the AppOffline.htm_ file and renames it to take the site down, copies all changed files, then  deletes the AppOffline.htm to bring the site back up.</description>
+  <settings>
+    <parameters>
+      <param name="DeployRootDirectory" value="" />
+    </parameters>
+    <build-runners>
+      <runner name="Deploy CMS directory (Kentico)" type="simpleRunner">
+        <parameters>
+          <param name="script.content"><![CDATA[xcopy .\CMS\App_Offline.htm_ "%DeployRootDirectory%" /I /Y /S /D
+rename "%DeployRootDirectory%\App_Offline.htm_" App_Offline.htm
+xcopy .\CMS "%DeployRootDirectory%" /I /Y /S /D
+del "%DeployRootDirectory%\App_Offline.htm"]]></param>
+          <param name="teamcity.step.mode" value="default" />
+          <param name="use.custom.script" value="true" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <requirements />
+  </settings>
+</meta-runner>
